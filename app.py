@@ -67,7 +67,7 @@ fix_duration = None
 
 
 def load_model(repo_name, exp_name, model_cls, model_cfg, ckpt_step):
-    ckpt_path = str(cached_path(f"/mnt/workspace/E2-F5-TTS/ckpts/{exp_name}/model_{ckpt_step}.safetensors"))
+    ckpt_path = str(cached_path(f"/home/studio_service/PROJECT/E2-F5-TTS/ckpts/{exp_name}/model_{ckpt_step}.safetensors"))
     # ckpt_path = f"ckpts/{exp_name}/model_{ckpt_step}.pt"  # .pt | .safetensors
     vocab_char_map, vocab_size = get_tokenizer("Emilia_ZH_EN", "pinyin")
     model = CFM(
