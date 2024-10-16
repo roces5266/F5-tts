@@ -760,15 +760,20 @@ with gr.Blocks() as app:
 # E2/F5 TTS
 
 This is a local web UI for F5 TTS with advanced batch processing support. This app supports the following TTS models:
+这是 F5 TTS 的本地 Web UI，支持批处理。此应用支持以下 TTS 模型：
 
 * [F5-TTS](https://arxiv.org/abs/2410.06885) (A Fairytaler that Fakes Fluent and Faithful Speech with Flow Matching)
 * [E2 TTS](https://arxiv.org/abs/2406.18009) (Embarrassingly Easy Fully Non-Autoregressive Zero-Shot TTS)
 
 The checkpoints support English and Chinese.
+TTS模型支持英文和中文
 
 If you're having issues, try converting your reference audio to WAV or MP3, clipping it to 15s, and shortening your prompt.
+如果您遇到问题，请尝试将参考音频转换为 WAV 或 MP3，将其剪辑至 15 秒，并缩短prompt。
 
 **NOTE: Reference text will be automatically transcribed with Whisper if not provided. For best results, keep your reference clips short (<15s). Ensure the audio is fully uploaded before generating.**
+**注意: 如果未提供参考文本，Whisper 将自动转录。为获得最佳效果，请保持参考片段简短（<15 秒）。确保在生成之前音频已完全上传。**
+
 """
     )
     gr.TabbedInterface([app_tts, app_podcast, app_emotional, app_credits], ["TTS", "Podcast", "Multi-Style", "Credits"])
