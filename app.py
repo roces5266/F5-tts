@@ -19,6 +19,8 @@ from transformers import pipeline
 import click
 import soundfile as sf
 from modelscope import snapshot_download
+import os
+os.system('pip install gradio==5.1.0')
 
 try:
     import spaces
