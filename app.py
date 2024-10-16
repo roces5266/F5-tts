@@ -18,6 +18,7 @@ from model.utils import (
 from transformers import pipeline
 import click
 import soundfile as sf
+from modelscope import snapshot_download
 
 try:
     import spaces
@@ -39,13 +40,15 @@ device = (
 
 print(f"Using {device} device")
 
+whisper = snapshot_download("AI-ModelScope/whisper-large-v3-turbo")
 pipe = pipeline(
     "automatic-speech-recognition",
-    model="openai/whisper-large-v3-turbo",
+    model=whisper,
     torch_dtype=torch.float16,
     device=device,
 )
-vocos = Vocos.from_pretrained("charactr/vocos-mel-24khz")
+vocos_mel = snapshot_download("pengzhendong/vocos-mel-24khz")
+vocos = Vocos.from_pretrained(vocos_mel)
 
 # --------------------- Settings -------------------- #
 
@@ -62,7 +65,7 @@ fix_duration = None
 
 
 def load_model(repo_name, exp_name, model_cls, model_cfg, ckpt_step):
-    ckpt_path = str(cached_path(f"hf://SWivid/{repo_name}/{exp_name}/model_{ckpt_step}.safetensors"))
+    ckpt_path = str(cached_path(f"/mnt/workspace/E2-F5-TTS/ckpts/{exp_name}/model_{ckpt_step}.safetensors"))
     # ckpt_path = f"ckpts/{exp_name}/model_{ckpt_step}.pt"  # .pt | .safetensors
     vocab_char_map, vocab_size = get_tokenizer("Emilia_ZH_EN", "pinyin")
     model = CFM(
