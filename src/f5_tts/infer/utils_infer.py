@@ -5,7 +5,7 @@ import hashlib
 import re
 import tempfile
 from importlib.resources import files
-
+from modelscope import snapshot_download
 import matplotlib
 
 matplotlib.use("Agg")
@@ -29,7 +29,8 @@ _ref_audio_cache = {}
 
 device = "cuda" if torch.cuda.is_available() else "mps" if torch.backends.mps.is_available() else "cpu"
 
-vocos = Vocos.from_pretrained("charactr/vocos-mel-24khz")
+vocos_mel = snapshot_download("pengzhendong/vocos-mel-24khz")
+vocos = Vocos.from_pretrained(vocos_mel)
 
 
 # -----------------------------------------
@@ -92,7 +93,8 @@ def load_vocoder(is_local=False, local_path="", device=device):
         vocos.eval()
     else:
         print("Download Vocos from huggingface charactr/vocos-mel-24khz")
-        vocos = Vocos.from_pretrained("charactr/vocos-mel-24khz")
+        vocos_mel = snapshot_download("pengzhendong/vocos-mel-24khz")
+        vocos = Vocos.from_pretrained(vocos_mel)
     return vocos
 
 
@@ -103,9 +105,10 @@ asr_pipe = None
 
 def initialize_asr_pipeline(device=device):
     global asr_pipe
+    model_dir = snapshot_download("AI-ModelScope/whisper-large-v3-turbo")
     asr_pipe = pipeline(
         "automatic-speech-recognition",
-        model="openai/whisper-large-v3-turbo",
+        model=model_dir,
         torch_dtype=torch.float16,
         device=device,
     )
