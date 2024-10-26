@@ -27,6 +27,8 @@ def gpu_decorator(func):
     else:
         return func
 
+import sys
+sys.path.append("./src")
 
 from f5_tts.model import DiT, UNetT
 from f5_tts.infer.utils_infer import (
